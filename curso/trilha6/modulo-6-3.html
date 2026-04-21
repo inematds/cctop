@@ -112,7 +112,7 @@
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔬 Auditoria de Contexto</h1>
       <p class="text-lg text-neutral-400 max-w-3xl">O que está comendo seu contexto? MCPs ociosos? Skills duplicadas? CLAUDE.md inchado? Descubra com o <code class="text-rose-400">/context</code>, meça, e corte com precisão cirúrgica.</p>
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">7</div><div class="text-xs text-neutral-400">Tópicos</div></div>
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">30</div><div class="text-xs text-neutral-400">Minutos</div></div>
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">Avançado</div><div class="text-xs text-neutral-400">Nível</div></div>
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">Operacional</div><div class="text-xs text-neutral-400">Tipo</div></div>
@@ -645,6 +645,129 @@
           <li class="flex items-start gap-3"><span class="text-blue-400 font-bold">4.</span><span>Rode <code class="text-blue-400 bg-dark-700 px-1.5 py-0.5 rounded">/context</code> de novo — compare</span></li>
           <li class="flex items-start gap-3"><span class="text-blue-400 font-bold">5.</span><span>Agende a próxima auditoria para daqui a 30 dias</span></li>
         </ol>
+      </div>
+    </section>
+
+    <!-- TOPICO 7 -->
+    <section id="topico-7" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">7</span>
+        <h2 class="text-2xl font-bold">🎯 Rotina de contexto limpo com skill de memória</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A técnica mais avançada de gestão de contexto: <strong class="text-rose-400">skill customizada</strong> que encapsula salvamento + reload, convertendo <code class="text-rose-400 bg-dark-700 px-1.5 py-0.5 rounded">/clear</code> numa operação mais barata que <code class="text-amber-400 bg-dark-700 px-1.5 py-0.5 rounded">/compact</code> em quase todo caso prático.
+      </p>
+
+      <!-- Regra principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6 text-center">
+        <div class="text-sm font-semibold text-rose-400 uppercase tracking-wider mb-3">Regra avançada</div>
+        <p class="text-xl sm:text-2xl font-bold leading-tight mb-3">
+          Com memória salva, <span class="text-rose-400">/clear</span> &gt; <span class="text-amber-400">/compact</span>
+        </p>
+        <p class="text-neutral-400 text-sm">Porque <code class="text-rose-400 bg-dark-700 px-1.5 py-0.5 rounded">/clear</code> devolve um prefixo estável (= cache limpo). <code class="text-amber-400 bg-dark-700 px-1.5 py-0.5 rounded">/compact</code> injeta resumo novo = cache invalidado.</p>
+      </div>
+
+      <!-- Skill frontmatter -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-4">Exemplo: skill <code class="text-rose-400 bg-dark-700 px-1.5 py-0.5 rounded">save-context</code></h3>
+        <p class="text-sm text-neutral-400 mb-4">Crie em <code class="text-rose-400 bg-dark-700 px-1.5 py-0.5 rounded">.claude/skills/save-context/SKILL.md</code>:</p>
+<pre class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto"><code>---
+name: save-context
+description: Organiza MEMORY.md + arquivos de apoio antes de /clear.
+  Use quando quiser reiniciar sessão sem perder estado.
+---
+
+# Save Context
+
+Ao ser invocada:
+
+1. Crie/atualize `MEMORY.md` na raiz do projeto com:
+   - Objetivo atual (1 linha)
+   - Decisões tomadas (lista)
+   - Arquivos tocados (caminhos absolutos)
+   - Próxima ação (1 linha)
+
+2. Se houver plan/todo ativos, garanta que
+   `plan.md` e `todo.md` estão atualizados.
+
+3. Reporte ao usuário: "Memória salva. Pode rodar /clear."
+</code></pre>
+      </div>
+
+      <!-- Comparação numérica -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden mb-6">
+        <div class="p-4 border-b border-dark-600 bg-dark-700/30">
+          <h3 class="font-semibold">Custo: /clear + skill vs /compact repetido</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-dark-700/50">
+              <tr class="text-left">
+                <th class="px-4 py-3 font-semibold text-neutral-400">Cenário (50k tokens base, 40 turnos total)</th>
+                <th class="px-4 py-3 font-semibold text-neutral-400">Cache hit médio</th>
+                <th class="px-4 py-3 font-semibold text-neutral-400">Custo estimado</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-dark-600">
+              <tr>
+                <td class="px-4 py-3"><strong class="text-amber-400">/compact a cada 10 turnos</strong><br><span class="text-xs text-neutral-500">resumo invalida parte do cache a cada compact</span></td>
+                <td class="px-4 py-3 font-mono text-amber-400">~55%</td>
+                <td class="px-4 py-3 font-mono text-amber-400">US$ 2,80</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3"><strong class="text-rose-400">/clear + skill a cada 15 turnos</strong><br><span class="text-xs text-neutral-500">prefixo limpo, cache fresco a cada ciclo</span></td>
+                <td class="px-4 py-3 font-mono text-emerald-400">~80%</td>
+                <td class="px-4 py-3 font-mono text-emerald-400">US$ 0,95</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-neutral-500 p-4">~3× mais barato no mesmo volume de trabalho. Mesmo modelo, mesmo projeto.</p>
+      </div>
+
+      <!-- Quando cada um -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-5">
+          <h4 class="font-bold text-emerald-400 mb-2 text-sm">✓ Prefira /clear + skill</h4>
+          <ul class="space-y-1.5 text-xs text-neutral-400">
+            <li>• Projetos recorrentes (daily)</li>
+            <li>• Contexto &gt;40k tokens</li>
+            <li>• Estado bem definido (tem arquivos)</li>
+            <li>• Vai continuar "amanhã"</li>
+          </ul>
+        </div>
+        <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-5">
+          <h4 class="font-bold text-amber-400 mb-2 text-sm">~ Prefira /compact</h4>
+          <ul class="space-y-1.5 text-xs text-neutral-400">
+            <li>• Sessão continua agora</li>
+            <li>• Decisão técnica fluindo</li>
+            <li>• Sem skill configurada</li>
+            <li>• Contexto &lt;30k tokens</li>
+          </ul>
+        </div>
+        <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-5">
+          <h4 class="font-bold text-blue-400 mb-2 text-sm">↩ Prefira /rewind</h4>
+          <ul class="space-y-1.5 text-xs text-neutral-400">
+            <li>• Passo deu errado</li>
+            <li>• Quer testar hipótese alternativa</li>
+            <li>• Arquivos em estado ruim</li>
+            <li>• Reset cirúrgico</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Integração com o fluxo completo -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">🔁</span>Ciclo completo (rotina diária)</h3>
+        <ol class="space-y-2 text-sm text-neutral-300">
+          <li><strong class="text-rose-400">1.</strong> Abro sessão → Claude lê <code class="text-rose-400 bg-dark-700 px-1.5 py-0.5 rounded">MEMORY.md</code> automaticamente</li>
+          <li><strong class="text-rose-400">2.</strong> Trabalho ~15–20 turnos</li>
+          <li><strong class="text-rose-400">3.</strong> Invoco skill <code class="text-rose-400 bg-dark-700 px-1.5 py-0.5 rounded">save-context</code></li>
+          <li><strong class="text-rose-400">4.</strong> <code class="text-rose-400 bg-dark-700 px-1.5 py-0.5 rounded">/clear</code></li>
+          <li><strong class="text-rose-400">5.</strong> Volta para passo 1</li>
+        </ol>
+        <p class="text-sm text-neutral-400 mt-4">Esse é o pattern de devs que rodam Claude Code 4+ horas/dia com custo previsível e estável.</p>
       </div>
     </section>
 
